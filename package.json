@@ -1,11 +1,26 @@
 {
   "name": "intel-edison-lcd-rgb-backlight-display-helper",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Display helper for Grove-LCD RGB Backlight (I2c). This works on the Intel Edison.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mayognaise/intel-edison-lcd-rgb-backlight-display-helper"
+  },
+  "keywords": [
+    "intel",
+    "edison",
+    "lcd"
+  ],
+  "author": "mayognaise",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayognaise/intel-edison-lcd-rgb-backlight-display-helper/issues"
+  },
+  "homepage": "https://github.com/mayognaise/intel-edison-lcd-rgb-backlight-display-helper",
   "author": "mayognaise",
   "license": "ISC",
   "dependencies": {

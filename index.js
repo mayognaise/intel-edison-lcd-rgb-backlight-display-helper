@@ -44,7 +44,6 @@ function clearColor () {
 
 function getRGB (val) {
   var color = Color(val)
-  // console.log(color);
   return color.rgbArray();
 }
 
@@ -78,11 +77,14 @@ function getCursor (index, val) {
 function write (data) {
   var count = 0;
   if(_.isArray(data)) {
-    _.each(data, function(val, index) {
-      var c = getCursor(index, val);
-      lcd.setCursor(c.row, c.col);
-      lcd.write(val);
-      if((index + 1) === displayRows) return false;
+    _.each(data, function(val, row) {
+      if(!_.isNull(val) && _.isString(val)) {
+        clearWord(row);
+        var c = getCursor(row, val);
+        lcd.setCursor(c.row, c.col);
+        lcd.write(val);
+        if((row + 1) === displayRows) return false;
+      }
     });
   } else if(_.isString(data)) {
     write([data]);
@@ -94,11 +96,14 @@ function write (data) {
 /**
  * Clear all words
  */
+function clearWord (row) {
+  lcd.setCursor(row, 0);
+  lcd.write(blankWords);
+}
 function clearWords () {
   var rows = displayRows;
   while(rows > 0) {
-    lcd.setCursor((rows - 1), 0);
-    lcd.write(blankWords);
+    clearWord(rows - 1);
     rows--;
   }
 }
@@ -123,5 +128,6 @@ module.exports = {
   setColor: setColor,
   write: write,
   clearWords: clearWords,
+  clearWord: clearWord,
   clearColor: clearColor
 };

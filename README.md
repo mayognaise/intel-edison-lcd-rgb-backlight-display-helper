@@ -23,8 +23,10 @@ display.write(['HELLO :)', 'BYE :(']);
 // Clear back light color
 display.clearColor();
 
-// Clear copies
+// Clear all copies
 display.clearWords();
 
+// Clear specific row's copy
+display.clearWord(rowNumber);
 
 ```
