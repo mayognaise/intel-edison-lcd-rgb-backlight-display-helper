@@ -27,13 +27,53 @@ var lcd = new jsUpmI2cLcd.Jhd1313m1(6, 0x3E, 0x62);
 /**
  * Set backlight color
  *
- * @param {String} color
+ * @param {String/Object} color
+ * @example "red", rgb(255, 255, 255)", {r: 255, g: 255, b: 255}
  */
 function setColor (color) {
-  var rgb = getRGB(color);
-  lcd.setColor(rgb[0], rgb[1], rgb[2]);
-//  lcd.setColor.apply({}, getRGB(color));
+  var rgb = getRGB(color)
+    , r = rgb[0]
+    , g = rgb[1]
+    , b = rgb[2]
+  lcd.setColor(r, g, b);
+  return [r , g, b];
 }
+
+
+/**
+ * Set backlight color from 2 colors and range
+ *
+ * @param {String/Object} from
+ * @param {String/Object} from
+ * @param {Number} range (0-1)
+ */
+function setColorFromTwoColors (from, to, range) {
+  if(_.isNumber(range)) {
+    range = Math.max(0, Math.min(1, range));
+  } else {
+    range = .5;
+  }
+  var rgbFrom = getRGB(from)
+    , rgbTo = getRGB(to)
+    , r0 = rgbFrom[0]
+    , r1 = rgbTo[0]
+    , rangeR = (r0 < r1)? range : (1 - range)
+    , g0 = rgbFrom[1]
+    , g1 = rgbTo[1]
+    , rangeG = (g0 < g1)? range : (1 - range)
+    , b0 = rgbFrom[2]
+    , b1 = rgbTo[2]
+    , rangeB = (b0 < b1)? range : (1 - range)
+    , r = Math.abs(r0 - r1) * rangeR + Math.min(r0, r1)
+    , g = Math.abs(g0 - g1) * rangeG + Math.min(g0, g1)
+    , b = Math.abs(b0 - b1) * rangeB + Math.min(b0, b1)
+  r = Math.round(r);
+  g = Math.round(g);
+  b = Math.round(b);
+  lcd.setColor(r , g, b);
+  return [r , g, b];
+}
+
 
 /**
  * Clear backlight color
@@ -102,9 +142,8 @@ function clearWord (row) {
 }
 function clearWords () {
   var rows = displayRows;
-  while(rows > 0) {
-    clearWord(rows - 1);
-    rows--;
+  while(rows-- > 0) {
+    clearWord(rows);
   }
 }
 
@@ -115,9 +154,8 @@ function set (rows, cols) {
   displayRows = rows;
   displayCols = cols;
   blankWords = '';
-  while(cols > 0) {
+  while(cols-- > 0) {
     blankWords += ' ';
-    cols--;
   }
 }
 
@@ -126,6 +164,7 @@ function set (rows, cols) {
 module.exports = {
   set: set,
   setColor: setColor,
+  setColorFromTwoColors: setColorFromTwoColors,
   write: write,
   clearWords: clearWords,
   clearWord: clearWord,
