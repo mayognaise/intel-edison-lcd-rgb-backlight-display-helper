@@ -1,6 +1,6 @@
 {
   "name": "intel-edison-lcd-rgb-backlight-display-helper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Display helper for Grove-LCD RGB Backlight (I2c). This works on the Intel Edison.",
   "main": "index.js",
   "scripts": {

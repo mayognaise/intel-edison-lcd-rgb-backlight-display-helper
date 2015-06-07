@@ -14,11 +14,14 @@ display.set(2, 16);
 // Set color
 display.setColor('red');
 
-// Display keyword
+// Display keyword on row 1
 display.write('HELLO!');
 
 // You can add Array too...
-display.write(['HELLO :)', 'BYE :(']);
+display.write(['HELLO', 'BYE']);
+
+// If you want to update only row 2
+display.write([null, 'OH MY!']);
 
 // Clear back light color
 display.clearColor();
@@ -26,7 +29,7 @@ display.clearColor();
 // Clear all copies
 display.clearWords();
 
-// Clear specific row's copy
+// Clear specific row
 display.clearWord(rowNumber);
 
 ```
